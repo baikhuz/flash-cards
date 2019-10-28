@@ -1,27 +1,23 @@
 const express = require('express')
+
+//importing the routes
 const userGateway = require('./api/userGateway')
+const libraryGateway = require('./api/libraryGateway')
 
 const app = express()
 
+//Using express middleware
 app.use(express.json());
 app.use(express.urlencoded({extended: false}))
 
-
+//Setting request routes
 app.use('/user', userGateway)
+app.use('/library', libraryGateway)
 
-
-app.use(function(err, req, res, next) {
-
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err: {}
-
-  res.status(err.status || 500)
-})
-
+//import database
 const db = require('./models')
 
-
-//connect to database adn listen on port
+//connect to database and listen on port
 db.sequelize.sync()
   .then( () => {
     app.listen(8080, () => {

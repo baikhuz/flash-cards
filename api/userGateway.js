@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const validate = require('validate.js')
+const uuid = require('uuid/v1')
 
 router.post("/", (req, res) => {
   console.log(req.body)
@@ -35,7 +36,22 @@ router.post("/", (req, res) => {
   const validation = validate({first_name, last_name, username, password, email}, constraints)
 
   if (validation) res.status(400).json({error: validation})
-  else res.status(400).json({first_name, last_name, username, password, email})
+  else {
+
+    db.Users.create({
+        user_id: uuid(),
+        first_name,
+        last_name,
+        username,
+        password,
+        email
+      }).then(function() {
+          res.status(400).json({first_name, last_name, username, password, email})
+      });
+    
+    
+    
+    }
 })
 
 module.exports = router
