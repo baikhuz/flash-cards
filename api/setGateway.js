@@ -6,33 +6,30 @@ const db = require("../models");
 router.post("/", (req, res) => {
   console.log(req.body);
   const constraints = {
-    library_name: {
+    set_name: {
       presence: true,
       length: { minimum: 1, maximum: 100 }
     },
-    library_description: {
+    set_description: {
       presence: true,
       length: { minimum: 1, maximum: 100 }
     }
   };
-  const library_name = req.body.library_name;
-  const library_description = req.body.library_description;
-  const user_id = req.body.user_id;
+  const set_name = req.body.set_name;
+  const set_description = req.body.set_description;
+  const LibraryId = req.body.library_id;
 
-  const validation = validate(
-    { library_name, library_description },
-    constraints
-  );
+  const validation = validate({ set_name, set_description }, constraints);
 
   if (validation) res.status(400).json({ error: validation });
   else {
-    db.Libraries.create({ library_name, library_description, UserId: user_id })
+    db.Sets.create({ set_name, set_description, LibraryId })
       .then(() => {
-        res.status(200).json({ library_name, library_description });
+        res.status(200).json({ set_name, set_description });
       })
       .catch(err => {
         console.log("Error " + err);
-        res.status(400).send("Error: Could not add library");
+        res.status(400).send("Error: Could not add set");
       });
   }
 });

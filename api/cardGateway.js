@@ -6,33 +6,30 @@ const db = require("../models");
 router.post("/", (req, res) => {
   console.log(req.body);
   const constraints = {
-    library_name: {
+    card_question: {
       presence: true,
       length: { minimum: 1, maximum: 100 }
     },
-    library_description: {
+    card_answer: {
       presence: true,
       length: { minimum: 1, maximum: 100 }
     }
   };
-  const library_name = req.body.library_name;
-  const library_description = req.body.library_description;
-  const user_id = req.body.user_id;
+  const card_question = req.body.card_question;
+  const card_answer = req.body.card_answer;
+  const SetId = req.body.set_id;
 
-  const validation = validate(
-    { library_name, library_description },
-    constraints
-  );
+  const validation = validate({ card_question, card_answer }, constraints);
 
   if (validation) res.status(400).json({ error: validation });
   else {
-    db.Libraries.create({ library_name, library_description, UserId: user_id })
+    db.Cards.create({ card_question, card_answer, SetId })
       .then(() => {
-        res.status(200).json({ library_name, library_description });
+        res.status(200).json({ card_question, card_answer });
       })
       .catch(err => {
         console.log("Error " + err);
-        res.status(400).send("Error: Could not add library");
+        res.status(400).send("Error: Could not add card");
       });
   }
 });
