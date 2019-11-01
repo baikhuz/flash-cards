@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const validate = require("validate.js");
 const db = require("../models");
+const config = require("../config/config");
+
+//JWT SECRET  = config.jwt
 
 router.post("/", (req, res) => {
   console.log(req.body);
