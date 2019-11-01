@@ -6,6 +6,7 @@ const database = process.env.DATABASE
 const host = process.env.HOST
 const port = process.env.PORT
 const node_env = process.env.NODE_ENV
+const jwt = process.env.JWT_SECRET
 
 const config = {
   dev: {
@@ -15,7 +16,8 @@ const config = {
       database,
       host,
       port
-    }
+    },
+    jwt
   },
   test: {},
   prod: {}
