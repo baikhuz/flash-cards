@@ -1,12 +1,11 @@
-"use strict";
+'use strict'
 module.exports = (sequelize, DataTypes) => {
   const Users = sequelize.define(
-    "Users",
+    'Users',
     {
       id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
+        type: DataTypes.UUID,
+        primaryKey: true
       },
       first_name: {
         type: DataTypes.STRING,
@@ -49,12 +48,12 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
       paranoid: true
     }
-  );
+  )
   Users.associate = function(models) {
     Users.hasMany(models.Libraries, {
       foreignKey: { allowNull: false },
-      onDelete: "CASCADE"
-    });
-  };
-  return Users;
-};
+      onDelete: 'CASCADE'
+    })
+  }
+  return Users
+}
